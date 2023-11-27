@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 작성</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="postForm">
+            <div class="form-group">
+                <label for="title">제목:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content">내용:</label>
+                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+            </div>
+
+            <button type="button" id="submitBtn" class="btn btn-primary">게시글 작성</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $('#submitBtn').click(function() {
+            const title = $('#title').val();
+            const content = $('#content').val();
+
+            const postData = {
+                title: title,
+                content: content
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/post',
+                data: JSON.stringify(postData),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('게시글이 성공적으로 작성되었습니다.');
+                    window.location.href='http://localhost:8080';
+                },
+                error: function(xhr, textStatus, error) {
+                    alert('게시글 작성 중 오류가 발생했습니다.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계산기</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                간단한 계산기
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input type="text" id="display" class="form-control" readonly>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('1')">1</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('2')">2</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('3')">3</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-info btn-block" onclick="appendToDisplay('+')">+</button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('4')">4</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('5')">5</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('6')">6</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-info btn-block" onclick="appendToDisplay('-')">-</button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('7')">7</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('8')">8</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('9')">9</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-info btn-block" onclick="appendToDisplay('*')">*</button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-3">
+                                        <button class="btn btn-danger btn-block" onclick="clearDisplay()">C</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary btn-block" onclick="appendToDisplay('0')">0</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-info btn-block" onclick="appendToDisplay('/')">/</button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-success btn-block" onclick="calculate()">=</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                로그
+                            </div>
+                            <div class="card-body">
+                                <!-- 화면에 로그를 표시할 div 요소 -->
+                                <div id="log"></div>
+                                <!-- 로그 클리어 버튼 -->
+                                <button class="btn btn-danger btn-block mt-3" onclick="clearLog()">로그 클리어</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let log = document.getElementById('log'); // 로그를 표시할 div 요소 가져오기
+        let lastCharIsOperator = false; // 마지막 입력이 연산자인지 여부를 추적하는 변수
+
+        function appendToDisplay(value) {
+            // 디스플레이의 현재 값
+            let currentDisplayValue = display.value;
+
+            // 첫 번째 글자로 연산자가 입력되는 경우 처리
+            if (currentDisplayValue.length === 0 && ['+', '-', '*', '/'].includes(value)) {
+                return;
+            }
+
+            // 마지막 입력이 연산자이고 새로운 입력도 연산자인 경우에는 추가하지 않음
+            if (lastCharIsOperator && ['+', '-', '*', '/'].includes(value)) {
+                return;
+            }
+
+            display.value += value;
+
+            // 입력이 연산자인 경우 마지막 입력이 연산자임을 추적
+            if (['+', '-', '*', '/'].includes(value)) {
+                lastCharIsOperator = true;
+            } else {
+                lastCharIsOperator = false;
+            }
+
+            // 로그를 화면에 추가
+            log.innerHTML += `'${value}'을 추가 했습니다. 현재 화면: ${display.value}<br>`;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+            // 로그를 화면에 추가
+            log.innerHTML += '클리어 버튼을 눌렀습니다.<br>';
+        }
+
+        function calculate() {
+            try {
+                let currentValue = display.value;
+
+                // 마지막 문자가 연산 기호인 경우 해당 연산 기호를 제거
+                if (['+', '-', '*', '/'].includes(currentValue[currentValue.length - 1])) {
+                    currentValue = currentValue.slice(0, -1);
+                }
+
+                display.value = eval(currentValue);
+                // 로그를 화면에 추가
+                log.innerHTML += `계산 결과: ${display.value}<br>`;
+            } catch (error) {
+                display.value = '오류';
+                // 로그를 화면에 추가
+                log.innerHTML += '오류 발생<br>';
+            }
+        }
+
+        function clearLog() {
+            log.innerHTML = ''; // 로그 클리어
+        }
+    </script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
