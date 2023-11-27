@@ -54,6 +54,7 @@ public class ViewController {
 		List<BoardDto> boardListDto = boardPage.getContent().stream().map(BoardDto::from).collect(Collectors.toList());
 		model.addAttribute("posts", boardListDto);
 		model.addAttribute("page", boardPage);
+		model.addAttribute("keyword", keyword);
 		return "index";
 	}
 	
