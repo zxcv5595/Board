@@ -52,4 +52,8 @@ public class BoardDto {
     public Long getViews() {
         return views;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

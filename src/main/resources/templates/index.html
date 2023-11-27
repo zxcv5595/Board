@@ -91,23 +91,26 @@
             <a class="btn btn-primary" href="/post">글쓰기</a>
         </div>
 
-        <div class="text-center">
-            <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${page.isFirst() ? ' disabled' : ''}">
-                    <a class="page-link" th:href="@{/boards(page=${page.number - 1}, keyword=${keyword})}"
-                        th:unless="${page.isFirst()}">Previous</a>
-                </li>
-                <!-- 페이지 숫자 -->
-                <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}" class="page-item"
-                    th:classappend="${page.number == i} ? ' active' : ''">
-                    <a class="page-link" th:href="@{/boards(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${page.isLast() ? ' disabled' : ''}">
-                    <a class="page-link" th:href="@{/boards(page=${page.number + 1}, keyword=${keyword})}"
-                        th:unless="${page.isLast()}">Next</a>
-                </li>
-            </ul>
-        </div>
+      <div class="text-center" th:if="${!page.isEmpty()}">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${page.isFirst() ? ' disabled' : ''}">
+            <a class="page-link" th:href="@{/boards(page=${page.number - 1}, keyword=${keyword})}"
+               th:unless="${page.isFirst()}">Previous</a>
+          </li>
+          <!-- 페이지 숫자 -->
+          <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}" class="page-item"
+              th:classappend="${page.number == i} ? ' active' : ''">
+            <a class="page-link" th:href="@{/boards(page=${i}, keyword=${keyword})}" th:text="${i + 1}"></a>
+          </li>
+          <li class="page-item" th:classappend="${page.isLast() ? ' disabled' : ''}">
+            <a class="page-link" th:href="@{/boards(page=${page.number + 1}, keyword=${keyword})}"
+               th:unless="${page.isLast()}">Next</a>
+          </li>
+        </ul>
+      </div>
+      <div class="text-center" th:unless="${!page.isEmpty()}">
+        <p>게시물이 없습니다.</p>
+      </div>
 
 
         <!-- Footer -->
