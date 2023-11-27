@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.mapper.BoardMapper">
+<mapper namespace="com.example.demo.board.mapper.BoardMapper">
 
 
  <insert id="save" parameterType="Board" useGeneratedKeys="true" keyProperty="id">
   <!-- 자동 생성된 키를 추출하여 keyProperty에 설정 -->
-  INSERT INTO Board (writer, title, content, views) VALUES (#{writer}, #{title}, #{content},#{views});
+  INSERT INTO board (writer, title, content, views) VALUES (#{writer}, #{title}, #{content},#{views});
 </insert>
 
 <select id="findAll" resultType="Board">
-    SELECT * FROM Board
+    SELECT * FROM board
     ORDER BY id DESC
 </select>
 
 
 <select id="findById" resultType="Board">
-    SELECT * FROM Board a
-    WHERE a.id = #{id}
+    SELECT * FROM board
+    WHERE id = #{id}
 </select>
 
 <update id="increaseViewCountById">
-    UPDATE Board
+    UPDATE board
     SET views = views + 1
     WHERE id = #{id}
 </update>
 
 <select id="findTitleByKeyword" resultType="Board">
-    SELECT * FROM Board
+    SELECT * FROM board
     WHERE title LIKE CONCAT('%', #{keyword}, '%')
     ORDER BY id DESC;
 </select>
 
 </mapper>
+

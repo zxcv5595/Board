@@ -1,9 +1,9 @@
-package com.example.demo.mapper;
+package com.example.demo.board.mapper;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import com.example.demo.entity.Board;
+import com.example.demo.board.domain.Board;
 @Mapper
 public interface BoardMapper {
 	void save(Board board);

@@ -43,10 +43,5 @@ dependencies {
     //mybatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 
-	/**lombok*/
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
