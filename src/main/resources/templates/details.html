@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .detail-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e3e3e3;
+        }
+        .detail-body {
+            padding: 20px;
+        }
+        .detail-footer {
+            text-align: right;
+            border-top: 1px solid #e3e3e3;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="detail-header">
+            <h2 th:text="${post.title}">게시물 제목</h2>
+            <small class="text-muted" th:text="'작성자: ' + ${post.writer}">작성자</small><br>
+            <small class="text-muted" th:text="'작성일: ' + ${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">작성일</small>
+        </div>
+        <div class="detail-body">
+            <p th:text="${post.content}">게시물 내용</p>
+        </div>
+        <div class="detail-footer">
+            <small class="text-muted" th:text="'조회수: ' + ${post.views}">조회수</small>
+            <a href="/" class="btn btn-primary btn-sm">목록으로 돌아가기</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

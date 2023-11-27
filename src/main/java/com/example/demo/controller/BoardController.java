@@ -13,7 +13,7 @@ public class BoardController {
 	
 	@PostMapping("/post")
 	public ResponseEntity<Void> postBoard(@RequestBody BoardDto request) {
-		boardService.postBoard(request);
+		boardService.saveBoard(request);
 		return ResponseEntity.ok().build();
 	}
 }
